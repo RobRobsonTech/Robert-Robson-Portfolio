@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta content="description" name="description">
+  <meta name="google" content="notranslate" />
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <link href="./assets/images/rrt-icon.png" rel="icon">
+
+  <link href="" rel="stylesheet">
+
+  <title>Robert Robson Portfolio</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/cb7bced706.js" crossorigin="anonymous"></script>
+  <link href="./main.550dcf66.css" rel="stylesheet">
+  <link href="./custom_css.css" rel="stylesheet">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ 
+  <script>
+    function submitToAPI(e) 
+    {
+      e.preventDefault();
+      // var URL = "API Gateway";
+    
+      var name = document.getElementById("name-input").value;
+      var email = document.getElementById("email-input").value;
+      var desc = document.getElementById("description-input").value;
+      var captcha = document.getElementById("captcha-input").value;
+      var response = grecaptcha.getResponse();
+      
+      if (name=="" || email=="" || desc=="")
+      {
+          // alert("Please Fill All Fields");
+          document.getElementById("contact-error").innerHTML = "<div class='alert alert-danger' role='alert' style='text-align:center;'>Please fill all fields!</div>";
+          return false;
+      }
+                
+      emailRE = /\S+@\S+\.\S+/;
+      if (!emailRE.test(email)) 
+      {
+        // alert("Email Address entered is not valid");
+        document.getElementById("contact-error").innerHTML = "<div class='alert alert-danger' role='alert' style='text-align:center;'>Email Address entered is not valid.</div>";
+        return false;
+      }
+
+      if (response.length == 0)
+      {
+        document.getElementById("contact-error").innerHTML = "<div class='alert alert-danger' role='alert' style='text-align:center;'>Please complete the Google Recaptcha.</div>";
+        return false;
+      }
+
+      var data = 
+      {
+        name : name,
+        email : email,
+        desc : desc
+      };
+    
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("POST", "https://06u3twczue.execute-api.eu-west-2.amazonaws.com/prod/email");
+      xmlhttp.setRequestHeader("Content-Type", "application/json");
+      xmlhttp.send(JSON.stringify(data));
+      xmlhttp.onreadystatechange = function() 
+      {
+        if (xmlhttp.readyState === 4) 
+          {
+            var response = JSON.parse(xmlhttp.responseText);
+            if (xmlhttp.status === 200 ) 
+            {
+              console.log('successful');
+              document.getElementById("contact-card").innerHTML = "<div class='alert alert-success' role='alert' style='text-align:center; background-color: #4257c3;'>Thank you for your message!<br>I will get back to you soon.</div>";
+            }
+            else 
+            {
+              console.log('failed');
+            }
+          }
+      }
+      document.getElementById('contact-form').reset();
+    } 
+  </script>
+</head>
+
+<body> <!-- Add your content of header -->
+  <header>
+    <nav class="navbar navbar-default active">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#projects" title="">Projects</a></li>
+            <li><a href="#experience" title="">Experience</a></li>
+            <li><a href="#education" title="">Education</a></li>
+            <li><a href="#skills" title="">Skills</a></li>
+            <li><a href="#contact" title="">Contact</a></li>
+            <li>
+              <p>
+                <a href="https://www.linkedin.com/in/robrobsontech/" class="btn btn-default navbar-btn" title="">LinkedIn</a>
+              </p>
+            </li>
+          </ul>
+        </div> 
+      </div>
+    </nav>
+  </header>
+
+<!-- Add your site or app content here -->
+  <div class="hero-full-container background-image-container white-text-container" id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1><b>Robert Dewar-Robson</b></h1>
+          <p>Software Engineer</p>
+          <br>
+          <a href="#projects" class="btn btn-default btn-lg" title="">Projects</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-container" id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+          <div class="text-center">
+            <h2>About Me</h2>
+            <p>
+            I'm Rob Robson, a Software Engineer from the UK.
+            </p>
+            <p>
+            I've recently finished my Master's degree in Technology Leadership & Entrepreneurship at the Hong Kong University of Science and Technology.
+            I have over three years of work experience in the IT industry, involving multiple software projects of different sizes and complexity.
+            Whilst at the University of the West of England I achieved a 1st-Class Honours in BSc Computer Systems Integration.
+            </p>
+            <p>
+            My wife and I are moving to London, and I am now seeking a Full-Time position with an ambitious company in London.
+            </p>
+            <a href="./assets/files/Robert-Dewar-Robson-CV.pdf" class="btn btn-primary" title="" target="_blank" download>
+              <div class="fa fa-file-pdf">&nbsp</div>
+              CV
+            </a>
+            <a href="./assets/files/Soundbrenner-Recommendation-Robert-Dewar-Robson.pdf" class="btn btn-primary" title="" target="_blank" download>
+              <div class="fa fa-file-pdf">&nbsp</div>
+              Recommendation
+            </a>
+            <br><br>
+            <p>
+			        <a href="https://www.linkedin.com/in/RobRobsonTech/" class="social-round-icon fa-icon" title="" target="_blank">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="https://github.com/RobRobsonTech/" class="social-round-icon fa-icon" title="" target="_blank">
+                <i class="fa fa-github" aria-hidden="true"></i>
+              </a>
+              <a href="https://twitter.com/RobRobsonTech/" class="social-round-icon fa-icon" title="" target="_blank">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.instagram.com/RobRobsonTech/" class="social-round-icon fa-icon" title="" target="_blank">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+            </p>
+          </div>
+       </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-container" id="projects">
+    <div class="container">
+      <div class="row">      
+        <div class="col-xs-12">
+          <div class="text-center">
+            <h2>Projects</h2>
+          </div>
+          <div id="carousel-example-generic" class="carousel carousel-fade slide" data-interval="false" data-ride="carousel"> 
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <img class="img-responsive project-image" src="./assets/images/asmond-project.jpg" alt="First slide">
+                <div class="carousel-caption card-shadow reveal">
+                  <h3 style="width:80%;">Asmond</h3>
+                  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                  <p>
+                    My Master's Thesis project involved creating an innovative solution to existing network security setups. 
+                    I proposed a scalable network security device which utilized individual security modules to provide businesses of any size with the best level of network security for each size of company. 
+                    These modules were designed to provide small, midsized, large and enterprise sized businesses with the most essential security features for each specific company size.
+                  </p>
+                  <p>
+                    During the process of this project I learnt much more about computer networks both during the product’s development and specific network courses I chose to take. 
+                    It was an enjoyable challenge where I built on both my business and technical skills. As the scope of this project was very large, I am proud to have covered so much ground in the short time I had on my Masters program.
+                  </p>                         
+                  <p style="color:black;">
+                    Python - Django - Bootstrap - CSS - JavaScript - jQuery - HTML - Git
+                  </p>
+                  <a href="./project.html" class="btn btn-primary" title="" target="_blank">
+                    <div class="fa fa-github">&nbsp</div>
+                    Source
+                  </a>
+                </div>
+              </div>
+              <div class="item">
+                <video width="100%" height="auto" max-height="480" autoplay loop muted>
+                  <source src="./assets/images/soundbrenner-website.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <div class="carousel-caption card-shadow reveal">
+                  <h3 style="width:80%;">Soundbrenner Company Website</h3>
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  <p>
+                    I joined Soundbrenner in the Summer of 2019 to upgrade their company website in time for their new product release.
+                    I worked alongside the design team to implement an effective website which can be used to easily promote products.
+                  </p>                         
+                  <p style="color:black;">
+                    PostCSS - Gulp - Zeplin - HTML - JavaScript - jQuery - CSS - Git
+                  </p>
+                  <a href="https://www.soundbrenner.com/" class="btn btn-primary" title="" target="_blank">
+                    <div class="fa fa-globe">&nbsp</div>
+                    Website
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>           
+        </div>          
+      </div>      
+    </div>
+  </div>
+
+  <div class="section-container" id="experience">
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <h2>Professional Experience</h2>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-4">
+          <img src="./assets/images/soundbrenner.png" alt="" class="reveal img-responsive reveal-content image-center">
+          <h3>Web Developer</h3>
+          <h4>Soundbrenner Limited</h4>
+          <p>
+            •	Rebuilt entire website with modern technologies & frameworks.<br>
+            •	Completed tight deadlines for new product release.<br>
+            •	Project planning & progress updating via Clickup.<br>
+            •	Created & maintained project documentation.<br>
+          </p>
+          <p>
+            <a href="https://www.soundbrenner.com/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <a href="https://instagram.com/soundbrenner/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/soundbrenner/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </p>
+        </div>
+       
+        <div class="col-xs-12 col-md-4">
+          <img src="./assets/images/zircon.jpg" alt="" class="reveal img-responsive reveal-content image-center">
+          <h3>Software Engineer</h3>
+          <h4>Zircon Software</h4>
+          <p>		
+            •	Demoed software to existing & potential clients.<br>
+            •	Operated as Scrum Master for multiple stand-up meetings.<br>
+            •	Adapted to new techniques, APIs & programming languages.<br>
+            •	Finished multiple projects of various sizes at different parts of their lifecycle.<br>
+            •	Gauged precise estimates of time required to complete project components.<br>
+          </p>
+          <p>
+            <a href="https://www.zirconsoftware.co.uk/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <a href="https://twitter.com/zirconsoftware/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/zircon-software-limited/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <img src="./assets/images/westgate-it.png" alt="" class="reveal img-responsive reveal-content image-center">
+          <h3>Network Engineer</h3>
+          <h4>Westgate IT</h4>
+          <p>
+            •	Lead-Engineer for 7 clients.<br>
+            •	Provided remote and on-site support.<br>
+            •	Maintained & supported client servers.<br>
+            •	Managed installation of network equipment.<br>
+            •	Diagnosed problems and made repairs where required.<br>
+            •	Multitasking while working on 20-30 problems each day.<br>
+          </p>
+          <p>
+            <a href="https://westgateit.co.uk/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <a href="https://twitter.com/WestgateIT/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/westgate-it" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section-container" id="education">
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <h2>Education</h2>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <img src="./assets/images/hkust.png" alt="" class="reveal img-responsive reveal-content image-center">
+          <h3>Technology Leadership & Entrepreneurship</h3>
+          <h4>The Hong Kong University of Science and Technology</h4>
+          <p>
+            •	Strengthened skills in network security, software engineering and business.<br>
+            •	Developed enterprise management skills and improved product prototyping.<br>
+            •	Guided students to learn about entrepreneurship as a teaching assistant.<br>
+            •	Utilised additional diversity training to improve managerial skills.<br>
+            •	Attended networking events within mainland China & Hong Kong.<br>
+          </p>
+          <p>
+            <a href="https://www.ust.hk/home/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/hkust/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.linkedin.com/school/hkust/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </p>
+        </div>
+       
+        <div class="col-xs-12 col-md-6">
+          <img src="./assets/images/uwe.png" alt="" class="reveal img-responsive reveal-content image-center">
+          <h3>Computer Systems Integration</h3>
+          <h4>The University of the West of England</h4>
+          <p>
+            •	Developed software in multiple languages, including full-stack development.<br>
+            •	Conveyed student feedback to staff as course representative.<br>
+            •	Vice-President of the Innovative Technology Society:<br>
+              <text style="font-size:12px;">
+              &nbsp - Publicised weekly sessions and updated team members.<br>
+              &nbsp - Hosted tutorial sessions to teach programming fundamentals.<br>
+              &nbsp - Organised guest speakers from the University & external companies such as HP.<br>
+              </text>
+          </p>
+          <p>
+            <a href="https://www.uwe.ac.uk/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/uwebristol/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.linkedin.com/school/university-of-the-west-of-england/" class="social-round-icon fa-icon" title="" target="_blank">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  
+  <div class="section-container" id="skills">
+    <div class="container text-center">
+      <div class="row section-container-spacer">
+        <div class="col-xs-12 col-md-12">
+          <h2 class="text-center">Programming Skills</h2>
+        </div>  
+      </div>
+      <!-- Skills List -->
+	    <div class="skills-info">
+        <div class="col-md-6 bar-grids">
+          <h6>Python</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 100%">
+            </div>
+          </div>
+          <h6>HTML</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 100%">
+            </div>
+          </div>
+          <h6>CSS</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 100%">
+            </div>
+          </div>
+          <h6>SQL</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 75%">
+            </div>
+          </div>
+          <h6>C++</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 50%">
+            </div>
+          </div>
+          <h6>C#</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 50%">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 bar-grids">
+          <h6>C</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 100%">
+            </div>
+          </div>
+          
+          <h6>JavaScript</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 100%">
+            </div>
+          </div>
+          <h6>jQuery</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 100%">
+            </div>
+          </div>
+          <h6>Perl</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 50%">
+            </div>
+          </div>
+          <h6>Java</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 50%">
+            </div>
+          </div>
+          <h6>Go</h6>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" style="width: 25%">
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"> </div>
+      </div>
+	  
+    </div>
+  </div>
+ 
+  <div class="section-container" id="additional">
+    <div class="container text-center">
+      <div class="row section-container-spacer">
+        <div class="col-xs-12 col-md-12">
+          <h2 class="text-center">Additional Skills</h2>
+        </div>  
+      </div>
+      <!-- Additional Skills List -->
+	    <div class="skills-info">
+        <div style="padding: 0 2em;">
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>Database Systems</h6>
+              </div>
+              <div style="text-align: right; position:absolute; right:6px; top:6px;">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseText1" aria-expanded="false" aria-controls="collapseText1" style="font-size: 32px; padding: 2px 12px;">
+                  +
+                </button>
+              </div>
+            </div>
+            <div class="panel-body collapse" id="collapseText1">
+              <div class="panel-body">
+                MySQL
+              </div>
+              <div class="panel-body">
+                SQLite
+              </div>
+              <div class="panel-body">
+                PostgreSQL
+              </div>
+              <div class="panel-body">
+                MongoDB
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>Web Development Systems</h6>
+              </div>
+              <div style="text-align: right; position:absolute; right:6px; top:6px;">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseText2" aria-expanded="false" aria-controls="collapseText2" style="font-size: 32px; padding: 2px 12px;">
+                  +
+                </button>
+              </div>
+            </div>
+            <div class="panel-body collapse" id="collapseText2">
+              <div class="panel-body">
+                Django
+              </div>
+              <div class="panel-body">
+                React
+              </div>
+              <div class="panel-body">
+                AWS / Lambda / SES / S3 / Route 53 / CloudFront
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>Project Management</h6>
+              </div>
+              <div style="text-align: right; position:absolute; right:6px; top:6px;">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseText3" aria-expanded="false" aria-controls="collapseText3" style="font-size: 32px; padding: 2px 12px;">
+                  +
+                </button>
+              </div>
+            </div>
+            <div class="panel-body collapse" id="collapseText3">
+              <div class="panel-body">
+                Git
+              </div>
+              <div class="panel-body">
+                Clickup
+              </div>
+              <div class="panel-body">
+                Jira
+              </div>
+              <div class="panel-body">
+                Upsource
+              </div>
+              <div class="panel-body">
+                Slack
+              </div>
+              <div class="panel-body">
+                Confluence
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>Deep Learning & AI</h6>
+              </div>
+              <div style="text-align: right; position:absolute; right:6px; top:6px;">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseText4" aria-expanded="false" aria-controls="collapseText4" style="font-size: 32px; padding: 2px 12px;">
+                  +
+                </button>
+              </div>
+            </div>
+            <div class="panel-body collapse" id="collapseText4">
+              <div class="panel-body">
+                Image Detection
+              </div>
+              <div class="panel-body">
+                Data Analysis
+              </div>
+              <div class="panel-body">
+                OpenCV & TensorFlow
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>Operating Systems</h6>
+              </div>
+              <div style="text-align: right; position:absolute; right:6px; top:6px;">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseText5" aria-expanded="false" aria-controls="collapseText5" style="font-size: 32px; padding: 2px 12px;">
+                  +
+                </button>
+              </div>
+            </div>
+            <div class="panel-body collapse" id="collapseText5">
+              <div class="panel-body">
+                Linux
+              </div>
+              <div class="panel-body">
+                Windows
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>Android Development</h6>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>Network Security</h6>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>Photo & Video Editing</h6>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Skill -->
+          <div class="panel panel-default">
+            <div class="panel-heading" style="position:relative">
+              <div class="additional-skill-header">
+                <h6>~ Currently Learning ~</h6>
+              </div>
+              <div style="text-align: right; position:absolute; right:6px; top:6px;">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseText6" aria-expanded="false" aria-controls="collapseText6" style="font-size: 32px; padding: 2px 12px;">
+                  +
+                </button>
+              </div>
+            </div>
+            <div class="panel-body collapse" id="collapseText6">
+              <div class="panel-body">
+                AWS
+              </div>
+              <div class="panel-body">
+                Docker
+              </div>
+              <div class="panel-body">
+                Kubernetes
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-container contact-container" id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="section-container-spacer">
+            <h2 class="text-center">Get in touch</h2>
+            <p class="text-center">
+              If you have a position you would like to discuss, feel free to get in contact with me!
+            </p>
+          </div>
+          <div class="card-container">
+            <div class="card card-shadow col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2 reveal">
+              <div class="reveal-content">
+                <div class="row">
+                  <div class="col-md-7">
+                    <form id="contact-form" method="post">
+                      <div id="contact-card">
+                        <div id="contact-error"></div>
+                        <div class="form-group">
+                          <input type="text" id="name-input" class="form-control" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                          <input type="email" id="email-input" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                          <textarea id="description-input" class="form-control" rows="3" placeholder="Enter your message" name="myMessage" required></textarea>
+                        </div>
+                        <div id="captcha-input" class="g-recaptcha" data-sitekey="6LfKM9YZAAAAAKyPBMtIyCrsaP7D4zOrV4Q1Cv7k" class="form-control" style="width:100%;" required></div>
+                        <br>
+                        <button type="button" onclick="submitToAPI(event)" class="btn btn-primary">Send Message</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-md-5">
+                    <ul class="list-unstyled address-container">
+                      <li>
+                        <span class="fa-icon">
+                          <i class="fa fa-phone" aria-hidden="true"></i>
+                        </span>
+                        +44-7456-213938
+                      </li>
+                      <li>
+                        <span class="fa-icon">
+                          <i class="fa fa fa-map-o" aria-hidden="true"></i>
+                        </span>
+                        142 School Road, Brislington, Bristol
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+    navbarFixedTopAnimation();
+  });
+</script>
+
+<footer class="footer-container white-text-container">
+  <div class="container">
+    <div class="row">
+
+     
+      <div class="col-xs-12">
+        <h3>Robert Robson</h3>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-5">
+            <p class="text-left">
+			        <a href="https://www.linkedin.com/in/RobRobsonTech/" class="social-round-icon white-round-icon fa-icon" title="" target="_blank">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="https://github.com/RobRobsonTech/" class="social-round-icon white-round-icon fa-icon" title="" target="_blank">
+                <i class="fa fa-github" aria-hidden="true"></i>
+              </a>
+              <a href="https://twitter.com/RobRobsonTech/" class="social-round-icon white-round-icon fa-icon" title="" target="_blank">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.instagram.com/RobRobsonTech/" class="social-round-icon white-round-icon fa-icon" title="" target="_blank">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+    navActivePage();
+    scrollRevelation('.reveal');
+  });
+</script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID 
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-XXXXX-X', 'auto');
+  ga('send', 'pageview');
+</script>
+
+--> <script type="text/javascript" src="./main.0cf8b554.js"></script></body>
+
+</html>
